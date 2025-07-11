@@ -1,16 +1,20 @@
 import { parseExcel } from './trainingParser.js';
 import { db, ref, set } from './firebase.js';
 
-document.getElementById('uploadExcel').addEventListener('change', (event) => {
-  const file = event.target.files[0];
-  parseExcel(file, (data) => {
-    displayProgram(data);
-    saveToFirebase(data);
-  });
-});
+export function initApp() {
+  const upload = document.getElementById('uploadExcel');
+  if (!upload) return;
 
-function displayProgram(program) {
-  console.log('Данные для отображения:', program);
+  upload.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    parseExcel(file, (data) => {
+      displayProgram(data);
+      saveToFirebase(data);
+    });
+  });
+}
+
+export function displayProgram(program) {
   const container = document.getElementById('program');
   container.innerHTML = '';
   const grouped = {};
@@ -40,8 +44,6 @@ function displayProgram(program) {
 }
 
 function saveToFirebase(data) {
-  const userId = "demoUser"; // Здесь можно добавить авторизацию
+  const userId = "demoUser";
   set(ref(db, 'programs/' + userId), data);
 }
-
-export { displayProgram };

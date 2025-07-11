@@ -2,12 +2,14 @@
     "name": "shrimpy",
     "type": "module",
     "scripts": {
-      "test": "mocha tests/cli/*.test.js"
+        "test": "mocha tests/cli/*.test.mjs"
     },
     "devDependencies": {
-      "mocha": "^10",
-      "chai": "^4",
-      "jsdom": "^22"
+        "chai": "^4",
+        "jsdom": "^22.1.0",
+        "mocha": "^10.8.2"
+    },
+    "dependencies": {
+        "firebase": "^11.10.0"
     }
-  }
-  
+}
