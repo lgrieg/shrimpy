@@ -1,18 +1,21 @@
 import { parseExcel } from './trainingParser.js';
 
 let db, ref, set, get, child;
-
+import { getFirebase } from '../../firebase.js';
 if (typeof window !== 'undefined') {
-  // Браузер: получаем из window (подключено через <script>)
-  db = window.db;
+  const { db, ref, set, get, child } = getFirebase();
   console.log('typeof window ref =', ref);
   console.log('typeof window typeof ref =', typeof ref);
   console.log('typeof window db =', db);
-
+  // Браузер: получаем из window (подключено через <script>)
+  db = window.db;
   ref = window.ref;
   set = window.set;
   get = window.get;
   child = window.child;
+  console.log('typeof window ref =', ref);
+  console.log('typeof window typeof ref =', typeof ref);
+  console.log('typeof window db =', db);
 } else {
   // Node.js: импортируем из firebase.node.js
   const path = new URL('../../firebase.node.js', import.meta.url);
