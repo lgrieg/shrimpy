@@ -9,6 +9,7 @@ import { getDatabase, ref, set, get, child } from 'firebase/database';
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
 const firebaseConfig = {
   apiKey: "AIzaSyAPEX9utX9Bqj3lcvZsOdJnprc3BBtXvcA",
   authDomain: "shrimpy-710e2.firebaseapp.com",
@@ -19,13 +20,12 @@ const firebaseConfig = {
   appId: "1:896165241896:web:ded0978006c6227958011d"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+firebase.initializeApp(firebaseConfig);
 
-export { db, ref, set, get, child };
-// window.db = db;
-// window.ref = ref;
-// window.set = set;
-// window.get = get;
-// window.child = child;
+const db = firebase.database();
+
+window.db = db;
+window.ref = firebase.database().ref;
+window.set = (path, value) => firebase.database().ref(path).set(value);
+window.get = (path) => firebase.database().ref(path).get();
+window.child = (path) => firebase.database().ref(path).child;

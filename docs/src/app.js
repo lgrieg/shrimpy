@@ -1,5 +1,18 @@
 import { parseExcel } from './trainingParser.js';
-import { db, ref, set } from './firebase.js';
+let db, ref, set;
+
+if (typeof window !== 'undefined') {
+  // Браузер: значения уже определены в window.firebase.js
+  db = window.db;
+  ref = window.ref;
+  set = window.set;
+} else {
+  // Node.js (тесты)
+  const firebase = await import('../../firebase.node.js');
+  db = firebase.db;
+  ref = firebase.ref;
+  set = firebase.set;
+}
 
 export function initApp() {
   const upload = document.getElementById('uploadExcel');
