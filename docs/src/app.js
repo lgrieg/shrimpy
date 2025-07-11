@@ -11,7 +11,7 @@ if (typeof window !== 'undefined') {
   child = window.child;
 } else {
   // Node.js: импортируем из firebase.node.js
-  const path = new URL('./firebase.node.js', import.meta.url);
+  const path = new URL('../../firebase.node.js', import.meta.url);
   const firebase = await import(path);
   db = firebase.db;
   ref = firebase.ref;
