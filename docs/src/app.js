@@ -1,34 +1,57 @@
 import { parseExcel } from './trainingParser.js';
-let db, ref, set;
+
+let db, ref, set, get, child;
 
 if (typeof window !== 'undefined') {
-  // Браузер: значения уже определены в window.firebase.js
   db = window.db;
   ref = window.ref;
   set = window.set;
+  get = window.get;
+  child = window.child;
 } else {
-  // Node.js (тесты)
-  const firebase = await import('../../firebase.node.js');
+  const path = new URL('../../firebase.node.js', import.meta.url);
+  const firebase = await import(path);
   db = firebase.db;
   ref = firebase.ref;
   set = firebase.set;
+  get = firebase.get;
+  child = firebase.child;
 }
 
 export function initApp() {
   const upload = document.getElementById('uploadExcel');
-  if (!upload) return;
-
-  upload.addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    parseExcel(file, (data) => {
-      displayProgram(data);
-      saveToFirebase(data);
+  if (upload) {
+    upload.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      parseExcel(file, (data) => {
+        displayProgram(data);
+        localStorage.setItem('program', JSON.stringify(data));
+        saveToFirebase(data);
+      });
     });
-  });
+  }
+
+  // Сначала пробуем localStorage
+  const saved = localStorage.getItem('program');
+  if (saved) {
+    displayProgram(JSON.parse(saved));
+  } else {
+    // Если нет локальных данных, пробуем Firebase
+    loadFromFirebase().then(data => {
+      if (data) {
+        displayProgram(data);
+        localStorage.setItem('program', JSON.stringify(data));
+      }
+    }).catch(err => {
+      console.error('Ошибка при загрузке из Firebase:', err);
+    });
+  }
 }
 
 export function displayProgram(program) {
   const container = document.getElementById('program');
+  if (!container) return;
+
   container.innerHTML = '';
   const grouped = {};
 
@@ -59,4 +82,15 @@ export function displayProgram(program) {
 function saveToFirebase(data) {
   const userId = "demoUser";
   set(ref(db, 'programs/' + userId), data);
+}
+
+async function loadFromFirebase() {
+  const userId = "demoUser";
+  const snapshot = await get(child(ref(db), 'programs/' + userId));
+  if (snapshot.exists()) {
+    return snapshot.val();
+  } else {
+    console.warn("Нет данных в Firebase");
+    return null;
+  }
 }
