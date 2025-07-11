@@ -5,6 +5,10 @@ let db, ref, set, get, child;
 if (typeof window !== 'undefined') {
   // Браузер: получаем из window (подключено через <script>)
   db = window.db;
+  console.log('typeof window ref =', ref);
+  console.log('typeof window typeof ref =', typeof ref);
+  console.log('typeof window db =', db);
+
   ref = window.ref;
   set = window.set;
   get = window.get;
@@ -105,6 +109,10 @@ function saveToFirebase(data) {
 
 async function loadFromFirebase() {
   const userId = "demoUser";
+  console.log('loadFromFirebase ref =', ref);
+  console.log('loadFromFirebase typeof ref =', typeof ref);
+  console.log('loadFromFirebase db =', db);
+
   const snapshot = await get(child(ref(db), 'programs/' + userId));
   if (snapshot.exists()) {
     return snapshot.val();
