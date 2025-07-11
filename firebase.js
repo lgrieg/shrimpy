@@ -20,12 +20,12 @@ const firebaseConfig = {
   appId: "1:896165241896:web:ded0978006c6227958011d"
 };
 
-firebase.initializeApp(firebaseConfig);
-
+const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
+
 window.db = db;
-window.ref = firebase.database().ref;
+window.ref = firebase.database().ref('path').set(value);
 window.set = (path, value) => firebase.database().ref(path).set(value);
 window.get = (path) => firebase.database().ref(path).get();
 window.child = (path) => firebase.database().ref(path).child;
