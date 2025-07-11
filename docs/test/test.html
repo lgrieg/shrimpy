@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Автотесты</title>
+  <link rel="stylesheet" href="mocha.css">
+</head>
+<body>
+  <div id="mocha"></div>
+  <script src="mocha.js"></script>
+  <script src="chai.js"></script>
+  <script>mocha.setup('bdd');</script>
+
+  <script src="../src/exceljs.min.js"></script>
+  <script type="module">
+    import { parseExcel } from '../src/trainingParser.js';
+    import { displayProgram } from '../src/app.js';
+    window.parseExcel = parseExcel;
+    window.displayProgram = displayProgram;
+    import './tests.js';
+    mocha.run();
+  </script>
+</body>
+</html>

@@ -6,6 +6,7 @@ export async function parseExcel(file, callback) {
     console.log('Файл прочитан, загружаю в ExcelJS...');
     const workbook = new ExcelJS.Workbook();
     await workbook.xlsx.load(e.target.result);
+    console.log('Excel успешно загружен');
 
     const worksheet = workbook.getWorksheet(1);
     const data = [];

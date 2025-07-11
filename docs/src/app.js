@@ -10,6 +10,7 @@ document.getElementById('uploadExcel').addEventListener('change', (event) => {
 });
 
 function displayProgram(program) {
+  console.log('Данные для отображения:', program);
   const container = document.getElementById('program');
   container.innerHTML = '';
   const grouped = {};
@@ -42,3 +43,5 @@ function saveToFirebase(data) {
   const userId = "demoUser"; // Здесь можно добавить авторизацию
   set(ref(db, 'programs/' + userId), data);
 }
+
+export { displayProgram };
