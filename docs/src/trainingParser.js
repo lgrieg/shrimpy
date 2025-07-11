@@ -1,7 +1,9 @@
 export async function parseExcel(file, callback) {
   const reader = new FileReader();
+  console.log('Файл получен:', file);
 
   reader.onload = async function (e) {
+    console.log('Файл прочитан, загружаю в ExcelJS...');
     const workbook = new ExcelJS.Workbook();
     await workbook.xlsx.load(e.target.result);
 
