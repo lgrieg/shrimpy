@@ -14,7 +14,7 @@ const firebaseConfig = {
   storageBucket: "shrimpy-710e2.firebasestorage.app",
   messagingSenderId: "896165241896",
   appId: "1:896165241896:web:ded0978006c6227958011d",
-  measurementId: "G-DK6XKTJ9LT"
+  //measurementId: "G-DK6XKTJ9LT"
 };
 
 // Initialize Firebase
