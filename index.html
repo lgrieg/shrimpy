@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Моя Тренировка</title>
+  <script src="./src/exceljs.min.js"></script>
+  <script type="module">
+    import { initApp } from './src/app.js';
+    initApp();
+  </script>
+  
+</head>
+<body>
+  <h1>Программа тренировок</h1>
+  <input type="file" id="uploadExcel" />
+  <div id="program"></div>
+</body>
+</html>
