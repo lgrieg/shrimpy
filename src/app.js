@@ -4,7 +4,6 @@ let db, ref, set, get, child;
 
 if (typeof window !== 'undefined') {
   // Браузер: получаем из window (подключено через <script>)
-  const path = new URL('../../firebase.js', import.meta.url);
   db = window.db;
   ref = window.ref;
   set = window.set;
