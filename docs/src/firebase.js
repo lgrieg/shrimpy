@@ -21,5 +21,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-
-export { db, ref, set, get, child };
+window.db = db;
+window.ref = ref;
+window.set = set;
+window.get = get;
+window.child = child;
