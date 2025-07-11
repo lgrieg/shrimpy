@@ -1,5 +1,3 @@
-import ExcelJS from './exceljs.min.js';
-
 export async function parseExcel(file, callback) {
   const reader = new FileReader();
 
