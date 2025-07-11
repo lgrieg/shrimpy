@@ -1,21 +1,27 @@
-// docs/src/trainingParser.js
+import ExcelJS from './exceljs.min.js';
 
-export function parseExcel(file, callback) {
+export async function parseExcel(file, callback) {
   const reader = new FileReader();
 
-  reader.onload = function (e) {
-    try {
-      const data = new Uint8Array(e.target.result);
-      const workbook = XLSX.read(data, { type: "array" });
+  reader.onload = async function (e) {
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.load(e.target.result);
 
-      const sheet = workbook.Sheets[workbook.SheetNames[0]];
-      const json = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+    const worksheet = workbook.getWorksheet(1);
+    const data = [];
 
-      callback(json);
-    } catch (err) {
-      console.error("Ошибка разбора Excel:", err);
-      alert("Ошибка чтения Excel-файла");
-    }
+    const headers = worksheet.getRow(1).values.slice(1); // Пропуск нулевого индекса
+
+    worksheet.eachRow((row, rowNumber) => {
+      if (rowNumber === 1) return;
+      const rowData = {};
+      row.eachCell((cell, colNumber) => {
+        rowData[headers[colNumber - 1]] = cell.text;
+      });
+      data.push(rowData);
+    });
+
+    callback(data);
   };
 
   reader.readAsArrayBuffer(file);

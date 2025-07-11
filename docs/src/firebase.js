@@ -13,13 +13,11 @@ const firebaseConfig = {
   databaseURL: "https://shrimpy-710e2-default-rtdb.europe-west1.firebasedatabase.app/",
   storageBucket: "shrimpy-710e2.firebasestorage.app",
   messagingSenderId: "896165241896",
-  appId: "1:896165241896:web:ded0978006c6227958011d",
-  //measurementId: "G-DK6XKTJ9LT"
+  appId: "1:896165241896:web:ded0978006c6227958011d"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
 
 export { db, ref, set, get, child };
