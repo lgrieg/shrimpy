@@ -1,14 +1,6 @@
-// Import the functions you need from the SDKs you need
-
-//import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+// firebase.js
 import { initializeApp } from 'firebase/app';
-//import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import { getDatabase, ref, set, get, child } from 'firebase/database';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
 const firebaseConfig = {
   apiKey: "AIzaSyAPEX9utX9Bqj3lcvZsOdJnprc3BBtXvcA",
@@ -20,12 +12,12 @@ const firebaseConfig = {
   appId: "1:896165241896:web:ded0978006c6227958011d"
 };
 
-const app = firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-
+// ✅ window-compatible bindings
 window.db = db;
-window.ref = firebase.database().ref('path').set(value);
-window.set = (path, value) => firebase.database().ref(path).set(value);
-window.get = (path) => firebase.database().ref(path).get();
-window.child = (path) => firebase.database().ref(path).child;
+window.ref = ref;
+window.set = set;
+window.get = get;
+window.child = child;
