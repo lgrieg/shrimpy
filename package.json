@@ -1,0 +1,13 @@
+{
+    "name": "shrimpy",
+    "type": "module",
+    "scripts": {
+      "test": "mocha tests/cli/*.test.js"
+    },
+    "devDependencies": {
+      "mocha": "^10",
+      "chai": "^4",
+      "jsdom": "^22"
+    }
+  }
+  
