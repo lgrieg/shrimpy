@@ -94,3 +94,11 @@ async function loadFromFirebase() {
     return null;
   }
 }
+
+function saveCheckboxStatus(exerciseId, status) {
+  const userId = "demoUser";
+  set(ref(db, `programs/${userId}/completed/${exerciseId}`), status);
+}
+
+
+export { db, ref, set, get, child };
