@@ -94,3 +94,5 @@ async function loadFromFirebase() {
     return null;
   }
 }
+
+export { db, ref, set, get, child };
