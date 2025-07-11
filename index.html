@@ -4,7 +4,19 @@
   <meta charset="UTF-8" />
   <title>Моя Тренировка</title>
   <script src="./src/exceljs.min.js"></script>
-  <script type="module" src="./firebase.js"></script>
+  <!-- Подключение compat-версии SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+  <!-- Этот скрипт установит window.ref и т.п. -->
+  <script src="./firebase.js"></script>
+
+  <!-- Твой app.js, который уже может использовать window.ref -->
+  <script type="module">
+    import { initApp } from './src/app.js';
+    initApp();
+  </script>
+
   <script type="module">
     import { initApp } from './src/app.js';
     initApp();
