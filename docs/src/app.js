@@ -2,7 +2,13 @@ import { parseExcel } from './trainingParser.js';
 
 let db, ref, set, get, child;
 if (typeof window !== 'undefined') {
-  const { db, ref, set, get, child } = getFirebase();
+  //const { db, ref, set, get, child } = getFirebase();
+  const firebase = await import(path);
+  db = firebase.db;
+  ref = firebase.ref;
+  set = firebase.set;
+  get = firebase.get;
+  child = firebase.child;
   console.log('Firebase init:', { db, ref, set, get, child });
   // Браузер: получаем из window (подключено через <script>)
 } else {
