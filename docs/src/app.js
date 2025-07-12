@@ -1,21 +1,10 @@
 import { parseExcel } from './trainingParser.js';
 
 let db, ref, set, get, child;
-import { getFirebase } from '../../firebase.js';
 if (typeof window !== 'undefined') {
   const { db, ref, set, get, child } = getFirebase();
-  console.log('typeof window ref =', ref);
-  console.log('typeof window typeof ref =', typeof ref);
-  console.log('typeof window db =', db);
+  console.log('Firebase init:', { db, ref, set, get, child });
   // Браузер: получаем из window (подключено через <script>)
-  db = window.db;
-  ref = window.ref;
-  set = window.set;
-  get = window.get;
-  child = window.child;
-  console.log('typeof window ref =', ref);
-  console.log('typeof window typeof ref =', typeof ref);
-  console.log('typeof window db =', db);
 } else {
   // Node.js: импортируем из firebase.node.js
   const path = new URL('../../firebase.node.js', import.meta.url);
@@ -25,6 +14,11 @@ if (typeof window !== 'undefined') {
   set = firebase.set;
   get = firebase.get;
   child = firebase.child;
+  console.log('Firebase init:', { db, ref, set, get, child });
+}
+
+function makeSafeId(str) {
+  return str.replace(/[^a-zA-Z0-9_-]/g, '_');
 }
 
 export function initApp() {
@@ -33,38 +27,29 @@ export function initApp() {
     upload.addEventListener('change', (event) => {
       const file = event.target.files[0];
       parseExcel(file, (data) => {
-        displayProgram(data);
+        displayProgram(data, saveCheckboxStatus);
         localStorage.setItem('program', JSON.stringify(data));
         saveToFirebase(data);
       });
     });
   }
 
-  // Загружаем из localStorage или Firebase
   const saved = localStorage.getItem('program');
   if (saved) {
-    displayProgram(JSON.parse(saved));
+    displayProgram(JSON.parse(saved), saveCheckboxStatus);
   } else {
     loadFromFirebase().then(data => {
       if (data) {
-        displayProgram(data);
+        displayProgram(data, saveCheckboxStatus);
         localStorage.setItem('program', JSON.stringify(data));
       }
     }).catch(err => {
       console.error('Ошибка при загрузке из Firebase:', err);
     });
   }
-
-  // Загружаем состояние чекбоксов
-  loadCheckboxStatuses().then(statuses => {
-    for (const [uid, status] of Object.entries(statuses)) {
-      const checkbox = document.getElementById(uid);
-      if (checkbox) checkbox.checked = status;
-    }
-  });
 }
 
-export function displayProgram(program) {
+export function displayProgram(program, saveCheckboxStatus = () => {}) {
   const container = document.getElementById('program');
   container.innerHTML = '';
   const grouped = {};
@@ -80,7 +65,8 @@ export function displayProgram(program) {
     section.innerHTML = `<h2>${day}</h2>`;
 
     exercises.forEach((ex, index) => {
-      const uid = `${day}-${index}`.replace(/[^\w-]/g, '_'); // безопасный ID
+      const uidRaw = `${day}-${index}`;
+      const uid = makeSafeId(uidRaw);  // ✅ Теперь в нужной области видимости
 
       const exDiv = document.createElement('div');
       exDiv.innerHTML = `
@@ -88,9 +74,7 @@ export function displayProgram(program) {
         Подходы: <input type="number" value="${ex['Подходы']}" /><br>
         Повторы: <input type="number" value="${ex['Повторы']}" /><br>
         Вес: <input type="number" value="${ex['Вес (кг)']}" step="0.5" /> кг<br>
-        <label>
-          <input type="checkbox" id="${uid}" ${ex.done ? 'checked' : ''}/> Выполнено
-        </label><hr>
+        <label><input type="checkbox" id="${uid}" ${ex.done ? 'checked' : ''}/> Выполнено</label><hr>
       `;
 
       const checkbox = exDiv.querySelector(`#${uid}`);
@@ -104,6 +88,9 @@ export function displayProgram(program) {
     container.appendChild(section);
   }
 }
+
+
+
 
 function saveToFirebase(data) {
   const userId = "demoUser";
