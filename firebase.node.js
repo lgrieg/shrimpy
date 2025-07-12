@@ -1,10 +1,11 @@
 // firebase.node.js
-
+import dotenv from 'dotenv';
+dotenv.config();
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set, get, child } from 'firebase/database';
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "shrimpy-710e2.firebaseapp.com",
   projectId: "shrimpy-710e2",
   databaseURL: "https://shrimpy-710e2-default-rtdb.europe-west1.firebasedatabase.app/",
