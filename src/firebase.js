@@ -1,6 +1,6 @@
 // firebase.js — без импортов, использует глобальный объект firebase от compat
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, set, get, child } from 'firebase/database';
+import { getFirebase, ref, set, get, child } from 'firebase/database';
 import dotenv from 'dotenv';
 dotenv.config();
 const firebaseConfig = {
@@ -13,9 +13,8 @@ const firebaseConfig = {
   appId: "1:896165241896:web:ded0978006c6227958011d"
 };
 
-firebase.initializeApp(firebaseConfig);
-
-const db = firebase.database();
+const app = initializeApp(firebaseConfig);
+const db = getFirebase(app);
 
 window.db = db;
 window.ref = (path) => db.ref(path);

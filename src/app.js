@@ -1,19 +1,15 @@
-import { parseExcel } from './trainingParser.js';
-
 let db, ref, set, get, child;
+
 if (typeof window !== 'undefined') {
-  //const { db, ref, set, get, child } = getFirebase();
-  const path = new URL('../firebase.js', import.meta.url);
-  const firebase = await import(path);
-  db = firebase.db;
-  ref = firebase.ref;
-  set = firebase.set;
-  get = firebase.get;
-  child = firebase.child;
-  console.log('Firebase init:', { db, ref, set, get, child });
-  // Браузер: получаем из window (подключено через <script>)
+  // 📦 Получаем из глобального контекста (если подключено firebase.js через <script>)
+  db = window.db;
+  ref = window.ref;
+  set = window.set;
+  get = window.get;
+  child = window.child;
+  console.log('Firebase init (browser):', { db, ref, set, get, child });
 } else {
-  // Node.js: импортируем из firebase.node.js
+  // 🧪 Node.js: импортируем firebase.node.js
   const path = new URL('../firebase.node.js', import.meta.url);
   const firebase = await import(path);
   db = firebase.db;
@@ -21,8 +17,9 @@ if (typeof window !== 'undefined') {
   set = firebase.set;
   get = firebase.get;
   child = firebase.child;
-  console.log('Firebase init:', { db, ref, set, get, child });
+  console.log('Firebase init (node):', { db, ref, set, get, child });
 }
+
 
 function makeSafeId(str) {
   return str.replace(/[^a-zA-Z0-9_-]/g, '_');
@@ -95,8 +92,6 @@ export function displayProgram(program, saveCheckboxStatus = () => {}) {
     container.appendChild(section);
   }
 }
-
-
 
 
 function saveToFirebase(data) {
