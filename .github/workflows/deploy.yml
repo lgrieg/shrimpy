@@ -22,7 +22,7 @@ jobs:
         run: npm install --save-dev mocha chai jsdom
 
       - name: Run CLI tests
-        run: npx mocha tests/cli/*.test.mjs
+        run: npx mocha test/cli/*.test.mjs
 
   deploy:
     needs: test             # ← не запускается, если тесты не прошли
