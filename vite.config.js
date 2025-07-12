@@ -1,11 +1,18 @@
-// vite.config.js
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vite'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig({
-  root: './src', // указываем папку с index.html
-  base: '/shrimpy/',
+  root: './src',
   build: {
-    outDir: '../docs', // куда собрать
-    emptyOutDir: true,
-  }
-});
+    outDir: '../docs',
+    emptyOutDir: true
+  },
+  plugins: [
+    viteStaticCopy({
+      targets: [
+        { src: './firebase.js', dest: '.' },
+        { src: './exceljs.min.js', dest: '.' }
+      ]
+    })
+  ]
+})
