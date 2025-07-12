@@ -1,0 +1,22 @@
+.
+├── firebase.js
+├── firebase.node.js
+├── package-lock.json
+├── package.json
+├── src
+│   ├── app.js
+│   ├── exceljs.min.js
+│   ├── index.html
+│   └── trainingParser.js
+├── structure.txt
+├── test
+│   ├── cli
+│   │   └── display.test.mjs
+│   ├── mocks
+│   │   └── fake.xlsx
+│   ├── test.html
+│   └── test.mjs
+├── training_program.xlsx
+└── vite.config.js
+
+5 directories, 15 files

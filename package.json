@@ -1,16 +1,24 @@
 {
     "name": "shrimpy",
     "type": "module",
+    "homepage": "https://lgrieg.github.io/shrimpy/",
     "scripts": {
-        "test": "mocha tests/cli/*.test.mjs"
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview",
+        "test": "mocha",
+        "deploy": "gh-pages -d docs"
     },
     "devDependencies": {
         "chai": "^4",
+        "gh-pages": "^6.3.0",
         "jsdom": "^22.1.0",
-        "mocha": "^10.8.2"
+        "mocha": "^10.8.2",
+        "vite": "^7.0.4",
+        "vite-plugin-static-copy": "^3.1.0"
     },
     "dependencies": {
+        "exceljs": "^4.4.0",
         "firebase": "^11.10.0"
     }
 }
-  
