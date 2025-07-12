@@ -1,6 +1,6 @@
 import { JSDOM } from 'jsdom';
 import { expect } from 'chai';
-import { displayProgram } from '../src/app.js';
+import { displayProgram } from '../../src/app.js';
 
 describe('displayProgram()', () => {
   before(() => {
