@@ -3,6 +3,7 @@ import { parseExcel } from './trainingParser.js';
 let db, ref, set, get, child;
 if (typeof window !== 'undefined') {
   //const { db, ref, set, get, child } = getFirebase();
+  const path = new URL('../firebase.js', import.meta.url);
   const firebase = await import(path);
   db = firebase.db;
   ref = firebase.ref;
